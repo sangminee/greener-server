@@ -1,22 +1,28 @@
 package com.example.SwDeveloperServer.domain.user.service;
 
+import com.example.SwDeveloperServer.domain.shop.entity.Item;
+import com.example.SwDeveloperServer.domain.shop.entity.UserItem;
+import com.example.SwDeveloperServer.domain.shop.repository.ItemRepository;
+import com.example.SwDeveloperServer.domain.shop.repository.UserItemRepository;
+import com.example.SwDeveloperServer.domain.user.entity.PlantPhoto;
 import com.example.SwDeveloperServer.domain.user.entity.User;
+import com.example.SwDeveloperServer.domain.user.repository.PlantPhotoRepository;
 import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
-import com.example.SwDeveloperServer.domain.user.repository.dto.request.PostJoinReq;
-import com.example.SwDeveloperServer.domain.user.repository.dto.response.PostFindEmailRes;
-import com.example.SwDeveloperServer.domain.user.repository.dto.response.PostFindPasswordRes;
-import com.example.SwDeveloperServer.domain.user.repository.dto.response.PostJoinRes;
-import com.example.SwDeveloperServer.domain.user.repository.dto.request.PostLoginReq;
-import com.example.SwDeveloperServer.domain.user.repository.dto.response.PostLoginRes;
+import com.example.SwDeveloperServer.domain.user.dto.request.PostJoinReq;
+import com.example.SwDeveloperServer.domain.user.dto.response.PostFindEmailRes;
+import com.example.SwDeveloperServer.domain.user.dto.response.PostFindPasswordRes;
+import com.example.SwDeveloperServer.domain.user.dto.response.PostJoinRes;
+import com.example.SwDeveloperServer.domain.user.dto.request.PostLoginReq;
+import com.example.SwDeveloperServer.domain.user.dto.response.PostLoginRes;
 import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.ErrorStatus;
-import com.example.SwDeveloperServer.utils.response.ResponseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static com.example.SwDeveloperServer.utils.response.ErrorStatus.*;
@@ -27,11 +33,17 @@ public class UserServiceImpl implements UerService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final UserJpaRepository userJpaRepository;
+    private final UserItemRepository userItemListRepository;
     private final JwtService jwtService;
+    private final ItemRepository itemRepository;
+    private final PlantPhotoRepository plantPhotoRepository;
 
-    public UserServiceImpl(UserJpaRepository userJpaRepository, JwtService jwtService) {
+    public UserServiceImpl(UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository, JwtService jwtService, ItemRepository itemRepository, PlantPhotoRepository plantPhotoRepository) {
         this.userJpaRepository = userJpaRepository;
+        this.userItemListRepository = userItemListRepository;
         this.jwtService = jwtService;
+        this.itemRepository = itemRepository;
+        this.plantPhotoRepository = plantPhotoRepository;
     }
 
     @Override
@@ -51,9 +63,30 @@ public class UserServiceImpl implements UerService {
         user.setUserType(postJoinReq.getUserType());
         user.setState(postJoinReq.getState());
 
+        Optional<PlantPhoto> getPlantPhoto = plantPhotoRepository.findById((long)1);
+        user.setPlantPhoto(getPlantPhoto.get());
+        
         userJpaRepository.save(user);
 
+        List<Item> allItem = itemRepository.findAll();
+        for(int i=0; i<allItem.size(); i++){
+            Long itemId = allItem.get(i).getItemId();
+            createItem(user, itemId);
+        }
+
         return new PostJoinRes(user.getUserId(), "회원가입이 완료되었습니다.");
+    }
+
+    // 식물
+    public void createItem(User user, Long itemId){
+        UserItem userItemList = new UserItem();
+        userItemList.setUser(user);
+
+        Optional<Item> item = itemRepository.findById(itemId);
+        userItemList.setItem(item.get());
+        userItemList.setItemQuantity(0);
+
+        userItemListRepository.save(userItemList);
     }
 
     @Override

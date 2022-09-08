@@ -1,4 +1,4 @@
-package com.example.SwDeveloperServer.domain.user.repository.dto.request;
+package com.example.SwDeveloperServer.domain.user.dto.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

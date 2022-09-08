@@ -1,11 +1,11 @@
 package com.example.SwDeveloperServer.domain.user.service;
 
-import com.example.SwDeveloperServer.domain.user.repository.dto.request.PostJoinReq;
-import com.example.SwDeveloperServer.domain.user.repository.dto.response.PostFindEmailRes;
-import com.example.SwDeveloperServer.domain.user.repository.dto.response.PostFindPasswordRes;
-import com.example.SwDeveloperServer.domain.user.repository.dto.response.PostJoinRes;
-import com.example.SwDeveloperServer.domain.user.repository.dto.request.PostLoginReq;
-import com.example.SwDeveloperServer.domain.user.repository.dto.response.PostLoginRes;
+import com.example.SwDeveloperServer.domain.user.dto.request.PostJoinReq;
+import com.example.SwDeveloperServer.domain.user.dto.response.PostFindEmailRes;
+import com.example.SwDeveloperServer.domain.user.dto.response.PostFindPasswordRes;
+import com.example.SwDeveloperServer.domain.user.dto.response.PostJoinRes;
+import com.example.SwDeveloperServer.domain.user.dto.request.PostLoginReq;
+import com.example.SwDeveloperServer.domain.user.dto.response.PostLoginRes;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 
 public interface UerService {

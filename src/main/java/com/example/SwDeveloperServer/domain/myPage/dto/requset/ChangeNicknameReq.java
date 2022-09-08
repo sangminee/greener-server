@@ -1,4 +1,4 @@
-package com.example.SwDeveloperServer.domain.myPage.repository.dto.requset;
+package com.example.SwDeveloperServer.domain.myPage.dto.requset;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

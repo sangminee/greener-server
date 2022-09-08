@@ -1,11 +1,11 @@
 package com.example.SwDeveloperServer.domain.myPage.service;
 
 import com.example.SwDeveloperServer.domain.myPage.entity.Stamp;
-import com.example.SwDeveloperServer.domain.myPage.repository.dto.requset.ChangeNameReq;
-import com.example.SwDeveloperServer.domain.myPage.repository.dto.requset.ChangeNicknameReq;
-import com.example.SwDeveloperServer.domain.myPage.repository.dto.requset.ChangeUserPhotoReq;
-import com.example.SwDeveloperServer.domain.myPage.repository.dto.response.ChangeRes;
-import com.example.SwDeveloperServer.domain.myPage.repository.dto.response.GetMyPage;
+import com.example.SwDeveloperServer.domain.myPage.dto.requset.ChangeNameReq;
+import com.example.SwDeveloperServer.domain.myPage.dto.requset.ChangeNicknameReq;
+import com.example.SwDeveloperServer.domain.myPage.dto.requset.ChangeUserPhotoReq;
+import com.example.SwDeveloperServer.domain.myPage.dto.response.ChangeRes;
+import com.example.SwDeveloperServer.domain.myPage.dto.response.GetMyPage;
 
 import java.util.List;
 

@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -34,4 +31,8 @@ public class User {
     private int phoneAgreement;
     private int userType;
     private int state;
+
+    @OneToOne
+    @JoinColumn(name = "plantId")
+    private PlantPhoto plantPhoto;
 }

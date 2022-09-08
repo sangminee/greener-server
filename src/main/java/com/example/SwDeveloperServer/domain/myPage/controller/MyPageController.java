@@ -1,8 +1,11 @@
-package com.example.SwDeveloperServer.domain.myPage;
+package com.example.SwDeveloperServer.domain.myPage.controller;
 
+import com.example.SwDeveloperServer.domain.myPage.dto.requset.ChangeNameReq;
+import com.example.SwDeveloperServer.domain.myPage.dto.requset.ChangeNicknameReq;
+import com.example.SwDeveloperServer.domain.myPage.dto.requset.ChangeUserPhotoReq;
+import com.example.SwDeveloperServer.domain.myPage.dto.response.ChangeRes;
+import com.example.SwDeveloperServer.domain.myPage.dto.response.GetMyPage;
 import com.example.SwDeveloperServer.domain.myPage.entity.Stamp;
-import com.example.SwDeveloperServer.domain.myPage.repository.dto.response.*;
-import com.example.SwDeveloperServer.domain.myPage.repository.dto.requset.*;
 import com.example.SwDeveloperServer.domain.myPage.service.MyPageServiceImpl;
 import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.BaseException;
@@ -52,7 +55,7 @@ public class MyPageController {
     }
 
     /**
-     * 앱 알람 on / off
+     * 앱 알람 on / off -
      */
 
     /**

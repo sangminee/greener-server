@@ -1,4 +1,4 @@
-package com.example.SwDeveloperServer.domain.myPage.repository.dto.response;
+package com.example.SwDeveloperServer.domain.myPage.dto.response;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
