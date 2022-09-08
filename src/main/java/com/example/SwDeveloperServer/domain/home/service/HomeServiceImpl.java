@@ -2,10 +2,11 @@ package com.example.SwDeveloperServer.domain.home.service;
 
 import com.example.SwDeveloperServer.domain.home.dto.GetHomeRes;
 import com.example.SwDeveloperServer.domain.home.dto.GetUserItemRes;
+import com.example.SwDeveloperServer.domain.myPage.entity.Point;
+import com.example.SwDeveloperServer.domain.myPage.repository.PointRepository;
 import com.example.SwDeveloperServer.domain.shop.entity.UserItem;
 import com.example.SwDeveloperServer.domain.shop.repository.ItemRepository;
 import com.example.SwDeveloperServer.domain.shop.repository.UserItemRepository;
-import com.example.SwDeveloperServer.domain.user.entity.PlantPhoto;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import com.example.SwDeveloperServer.domain.user.repository.PlantPhotoRepository;
 import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
@@ -20,18 +21,21 @@ public class HomeServiceImpl implements HomeService{
     private final UserJpaRepository userJpaRepository;
     private final UserItemRepository userItemListRepository;
     private final PlantPhotoRepository plantPhotoRepository;
+    private final PointRepository pointRepository;
 
-    public HomeServiceImpl(ItemRepository itemRepository, UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository, PlantPhotoRepository plantPhotoRepository) {
+    public HomeServiceImpl(ItemRepository itemRepository, UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository, PlantPhotoRepository plantPhotoRepository, PointRepository pointRepository) {
         this.itemRepository = itemRepository;
         this.userJpaRepository = userJpaRepository;
         this.userItemListRepository = userItemListRepository;
         this.plantPhotoRepository = plantPhotoRepository;
+        this.pointRepository = pointRepository;
     }
 
     @Override
     public GetHomeRes getHome(Long userId) {
         Optional<User> user = userJpaRepository.findById(userId);
         List<UserItem> allUserItem = userItemListRepository.findAllByUser(user.get());
+        Optional<Point> point = pointRepository.findByUser(user.get());
 
         Queue<GetUserItemRes> getUserItemResQueue = new LinkedList<>();
 
@@ -50,6 +54,7 @@ public class HomeServiceImpl implements HomeService{
         getHomeRes.setPlantPhotoUrl(user.get().getPlantPhoto().getPlantPhotoUrl());
         getHomeRes.setPlantLevel(user.get().getPlantPhoto().getPlantLevel());
         getHomeRes.setItemList(getUserItemResQueue);
+        getHomeRes.setPointValue(point.get().getPointValue());
 
         return getHomeRes;
     }

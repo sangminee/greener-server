@@ -1,6 +1,7 @@
 package com.example.SwDeveloperServer.domain.home.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,10 +10,14 @@ import lombok.Setter;
 @Setter
 public class GetUserItemRes {
     // - Item
+    @ApiModelProperty(notes = "아이템 일련 번호")
     private long itemId;
-    private String itemName; // 아이템 이름
-    private String itemPhoto; // 아이템 사진
+    @ApiModelProperty(notes = "아이템 이름")
+    private String itemName;
+    @ApiModelProperty(notes = "아이템 사진")
+    private String itemPhoto;
 
     // - UserItem
-    private int itemQuantity; // 수량
+    @ApiModelProperty(notes = "유저가 가진 아이템 수량")
+    private int itemQuantity;
 }
