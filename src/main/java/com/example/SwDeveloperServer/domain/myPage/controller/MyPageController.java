@@ -11,10 +11,7 @@ import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.SuccessStatus;
 import com.example.SwDeveloperServer.utils.response.ResponseService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +20,7 @@ import java.util.List;
 import static com.example.SwDeveloperServer.utils.response.ErrorStatus.*;
 
 @RestController
-@Api(tags = "2. 마이페이지 API ")
+@Api(tags = "3. 마이페이지 API ")
 public class MyPageController {
 
     private final MyPageServiceImpl myPageService;
@@ -43,6 +40,7 @@ public class MyPageController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = GetMyPage.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @GetMapping("/myPage")
     public ResponseEntity<?> getMyPage() throws BaseException {
         try {
@@ -74,6 +72,7 @@ public class MyPageController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = Stamp.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @GetMapping("/stamp")
     public ResponseEntity<?> getStamps() throws BaseException {
         try {
@@ -92,6 +91,7 @@ public class MyPageController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = Stamp.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @GetMapping("/stamp/{stampId}")
     public ResponseEntity<?> getStamp(@PathVariable String stampId) throws BaseException {
         try {
@@ -133,6 +133,7 @@ public class MyPageController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = ChangeRes.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @PostMapping("/change/name")
     public ResponseEntity<?> changeName(@RequestBody ChangeNameReq changeNameReq) throws BaseException {
         try {
@@ -154,6 +155,7 @@ public class MyPageController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = ChangeRes.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @PostMapping("/change/userPhoto")
     public ResponseEntity<?> changeUserPhoto(@RequestBody ChangeUserPhotoReq changeUserPhotoReq) throws BaseException {
         try {

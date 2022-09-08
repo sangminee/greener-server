@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @ApiModel(description = "로그인")
 public class PostLoginReq {
-    @ApiModelProperty(notes = "이메일")
+    @ApiModelProperty(notes = "이메일", example="test000")
     private String email;
-    @ApiModelProperty(notes = "비밀번호")
+    @ApiModelProperty(notes = "비밀번호", example="test000")
     private String password;
 }

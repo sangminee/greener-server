@@ -7,10 +7,7 @@ import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.ResponseService;
 import com.example.SwDeveloperServer.utils.response.SuccessStatus;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +32,7 @@ public class ShopController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = GetShopRes.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @GetMapping("/shop")
     public ResponseEntity<?> getShop() throws BaseException {
         try {
@@ -54,6 +52,7 @@ public class ShopController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = GetShopRes.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @PostMapping("/shop")
     public ResponseEntity<?> purchaseItem(@RequestParam(required = false) Long itemId) throws BaseException {
         try {

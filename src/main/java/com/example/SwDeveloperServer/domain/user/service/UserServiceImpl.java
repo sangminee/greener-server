@@ -1,5 +1,7 @@
 package com.example.SwDeveloperServer.domain.user.service;
 
+import com.example.SwDeveloperServer.domain.myPage.entity.Point;
+import com.example.SwDeveloperServer.domain.myPage.repository.PointRepository;
 import com.example.SwDeveloperServer.domain.shop.entity.Item;
 import com.example.SwDeveloperServer.domain.shop.entity.UserItem;
 import com.example.SwDeveloperServer.domain.shop.repository.ItemRepository;
@@ -37,13 +39,15 @@ public class UserServiceImpl implements UerService {
     private final JwtService jwtService;
     private final ItemRepository itemRepository;
     private final PlantPhotoRepository plantPhotoRepository;
+    private final PointRepository pointRepository;
 
-    public UserServiceImpl(UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository, JwtService jwtService, ItemRepository itemRepository, PlantPhotoRepository plantPhotoRepository) {
+    public UserServiceImpl(UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository, JwtService jwtService, ItemRepository itemRepository, PlantPhotoRepository plantPhotoRepository, PointRepository pointRepository) {
         this.userJpaRepository = userJpaRepository;
         this.userItemListRepository = userItemListRepository;
         this.jwtService = jwtService;
         this.itemRepository = itemRepository;
         this.plantPhotoRepository = plantPhotoRepository;
+        this.pointRepository = pointRepository;
     }
 
     @Override
@@ -65,8 +69,9 @@ public class UserServiceImpl implements UerService {
 
         Optional<PlantPhoto> getPlantPhoto = plantPhotoRepository.findById((long)1);
         user.setPlantPhoto(getPlantPhoto.get());
-        
+
         userJpaRepository.save(user);
+        createPoint(user);
 
         List<Item> allItem = itemRepository.findAll();
         for(int i=0; i<allItem.size(); i++){
@@ -77,6 +82,14 @@ public class UserServiceImpl implements UerService {
         return new PostJoinRes(user.getUserId(), "회원가입이 완료되었습니다.");
     }
 
+    // 회원 별 포인트 DB 생성
+    public void createPoint(User user){
+        Point point = new Point();
+        point.setUser(user);
+        point.setPointValue(1000);  // 기본 포인트
+
+        pointRepository.save(point);
+    }
     // 식물
     public void createItem(User user, Long itemId){
         UserItem userItemList = new UserItem();

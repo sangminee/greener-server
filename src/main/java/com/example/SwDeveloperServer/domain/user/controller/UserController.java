@@ -1,5 +1,7 @@
 package com.example.SwDeveloperServer.domain.user.controller;
 
+import com.example.SwDeveloperServer.domain.user.dto.request.PostFindEmailReq;
+import com.example.SwDeveloperServer.domain.user.dto.request.PostFindPasswordReq;
 import com.example.SwDeveloperServer.domain.user.dto.request.PostJoinReq;
 import com.example.SwDeveloperServer.domain.user.dto.request.PostLoginReq;
 import com.example.SwDeveloperServer.domain.user.dto.response.PostFindEmailRes;
@@ -11,10 +13,7 @@ import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.ResponseService;
 import com.example.SwDeveloperServer.utils.response.SuccessStatus;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -101,12 +100,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "OK", response = PostFindEmailRes.class)
     })
     @PostMapping("/find-email")
-    public ResponseEntity<?> findEmail(@RequestBody Map<String, String> map) throws BaseException {
+    public ResponseEntity<?> findEmail(@RequestBody PostFindEmailReq postFindEmailReq) throws BaseException {
         try {
-            if (map.get("phone").equals("")) {
+            if (postFindEmailReq.getPhone().equals("")) {
                 throw new BaseException(POST_USERS_EMPTY_PHONE);
             }
-            PostFindEmailRes postFindEmailRes = userService.findEmail(map.get("phone"));
+            PostFindEmailRes postFindEmailRes = userService.findEmail(postFindEmailReq.getPhone());
             return responseService.successResult(postFindEmailRes, SuccessStatus.SUCCESS);
         } catch (BaseException exception) {
             return responseService.errorResult(exception.getErrorStatus());
@@ -119,12 +118,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "OK", response = PostFindPasswordRes.class)
     })
     @PostMapping("/find-password")
-    public ResponseEntity<?> findPassword(@RequestBody Map<String, String> map) throws BaseException {
+    public ResponseEntity<?> findPassword(@RequestBody PostFindPasswordReq postFindPasswordReq) throws BaseException {
         try {
-            if (map.get("email").equals("")) {
+            if (postFindPasswordReq.getEmail().equals("")) {
                 throw new BaseException(POST_USERS_EMPTY_EMAIL);
             }
-            PostFindPasswordRes postFindPasswordRes = userService.findPassword(map.get("email"));
+            PostFindPasswordRes postFindPasswordRes = userService.findPassword(postFindPasswordReq.getEmail());
             return responseService.successResult(postFindPasswordRes, SuccessStatus.SUCCESS);
         } catch (BaseException exception) {
             return responseService.errorResult(exception.getErrorStatus());

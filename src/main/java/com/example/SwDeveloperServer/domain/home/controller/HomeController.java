@@ -6,16 +6,13 @@ import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.ResponseService;
 import com.example.SwDeveloperServer.utils.response.SuccessStatus;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Api(tags ="3. 홈 API ")
+@Api(tags ="2. 홈 API ")
 public class HomeController {
 
     private final HomeServiceImpl homeService;
@@ -35,6 +32,7 @@ public class HomeController {
     @ApiResponses({  // Response Message 에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = GetHomeRes.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @GetMapping("/")
     public ResponseEntity<?> getHome() throws BaseException {
         try {
