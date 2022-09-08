@@ -23,5 +23,5 @@ public class Point {
     @JoinColumn(name="userId")
     private User user;
 
-    private String stampUrl;
+    private int pointValue;
 }

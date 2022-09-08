@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Todo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long todoId;
@@ -30,7 +31,5 @@ public class Todo {
 
     private int listGoalRepetition;
     private int state;
-
-
 
 }

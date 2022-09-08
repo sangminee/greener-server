@@ -31,18 +31,14 @@ public class MyPageServiceImpl implements MyPageService{
 
     @Override
     public GetMyPage getMyPage(Long userId) {
+
         return null;
     }
 
     @Override
     public List<Stamp> getStamps(Long userId) {
-        List<Stamp> list = stampRepository.findAll();
-        List<Stamp> getStamps = new ArrayList<>();
-        for(int i=0; i<list.size(); i++){
-            if(list.get(i).getUser().getUserId() == userId){
-                getStamps.add(list.get(i));
-            }
-        }
+        Optional<User> user = userJpaRepository.findById(userId);
+        List<Stamp> getStamps = stampRepository.findAllByUser(user.get());
         return getStamps;
     }
 

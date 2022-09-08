@@ -1,4 +1,4 @@
-package com.example.SwDeveloperServer.domain.shop;
+package com.example.SwDeveloperServer.domain.shop.controller;
 
 import com.example.SwDeveloperServer.domain.shop.dto.GetShopRes;
 import com.example.SwDeveloperServer.domain.shop.dto.PostItemReq;
@@ -68,7 +68,7 @@ public class ShopController {
 
 
     /**
-     * 상점 Item 추가 API
+     * 상점 Item 추가 API - 완료
      */
     @ApiOperation(value = "상점 Item 추가 API")
     @ApiResponses({  // Response Message에 대한 Swagger 설명
