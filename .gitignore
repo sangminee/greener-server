@@ -20,6 +20,7 @@ bin/
 !**/src/test/**/bin/
 
 *.yml
+*.properties
 
 ### IntelliJ IDEA ###
 .idea
