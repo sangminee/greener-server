@@ -6,6 +6,9 @@ import com.example.SwDeveloperServer.domain.shop.entity.Item;
 import com.example.SwDeveloperServer.domain.shop.entity.UserItem;
 import com.example.SwDeveloperServer.domain.shop.repository.ItemRepository;
 import com.example.SwDeveloperServer.domain.shop.repository.UserItemRepository;
+import com.example.SwDeveloperServer.domain.toDoList.entity.Todo;
+import com.example.SwDeveloperServer.domain.toDoList.repository.TodoRepository;
+import com.example.SwDeveloperServer.domain.toDoList.service.ToDoListServiceImpl;
 import com.example.SwDeveloperServer.domain.user.entity.PlantPhoto;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import com.example.SwDeveloperServer.domain.user.repository.PlantPhotoRepository;
@@ -24,6 +27,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,13 +46,18 @@ public class UserServiceImpl implements UerService {
     private final PlantPhotoRepository plantPhotoRepository;
     private final PointRepository pointRepository;
 
-    public UserServiceImpl(UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository, JwtService jwtService, ItemRepository itemRepository, PlantPhotoRepository plantPhotoRepository, PointRepository pointRepository) {
+    private final TodoRepository todoRepository;
+
+    public UserServiceImpl(UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository,
+                           JwtService jwtService, ItemRepository itemRepository, PlantPhotoRepository plantPhotoRepository,
+                           PointRepository pointRepository, TodoRepository todoRepository) {
         this.userJpaRepository = userJpaRepository;
         this.userItemListRepository = userItemListRepository;
         this.jwtService = jwtService;
         this.itemRepository = itemRepository;
         this.plantPhotoRepository = plantPhotoRepository;
         this.pointRepository = pointRepository;
+        this.todoRepository = todoRepository;
     }
 
     @Override
@@ -71,6 +81,8 @@ public class UserServiceImpl implements UerService {
         user.setPlantPhoto(getPlantPhoto.get());
 
         userJpaRepository.save(user);
+
+        createTodo(user, user.getUserCreateTime());
         createPoint(user);
 
         List<Item> allItem = itemRepository.findAll();
@@ -80,6 +92,42 @@ public class UserServiceImpl implements UerService {
         }
 
         return new PostJoinRes(user.getUserId(), "회원가입이 완료되었습니다.");
+    }
+
+    private enum ETodo{
+        e1("메일함 정리하기"),
+        e2("노트북 전원 끄기"),
+        e3("사진 용량 줄이기");
+        private final String value;
+        ETodo(String value){
+            this.value = value;
+        }
+        public String getValue(){
+            return value;
+        }
+    }
+
+    private void createTodo(User user, LocalDateTime now) {
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int dayOfMonth = now.getDayOfMonth();
+
+        LocalDateTime startLocalDateTime = now.of(year,month,dayOfMonth,00,00,00);
+        LocalDateTime endLocalDateTime = now.of(year,month,dayOfMonth,23,59,59);
+
+        System.out.println("dddd");
+        for(ETodo eTodo : ETodo.values()){
+            Todo todo = new Todo();
+            todo.setUser(user);
+            todo.setGoalDescription(eTodo.value);
+
+            todo.setToStartDate(startLocalDateTime);
+            todo.setToEndDate(endLocalDateTime);
+
+            todo.setState(1);
+
+            todoRepository.save(todo);
+        }
     }
 
     // 회원 별 포인트 DB 생성

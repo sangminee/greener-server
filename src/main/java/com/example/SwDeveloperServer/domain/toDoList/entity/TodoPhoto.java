@@ -1,6 +1,5 @@
 package com.example.SwDeveloperServer.domain.toDoList.entity;
 
-import com.example.SwDeveloperServer.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
