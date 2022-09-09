@@ -7,10 +7,7 @@ import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.ResponseService;
 import com.example.SwDeveloperServer.utils.response.SuccessStatus;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +57,7 @@ public class ToDoListController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = PostToDoListRes.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @PostMapping("/todo")
     public ResponseEntity<?> setTodoList(@RequestBody PostToDoListReq postToDoListReq) throws BaseException {
         try {
@@ -78,6 +76,7 @@ public class ToDoListController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = GetToDoListRes.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @GetMapping("/todo")
     public ResponseEntity<?> getTodo(@RequestParam(required = false) String date) throws BaseException {
         try {
@@ -100,6 +99,7 @@ public class ToDoListController {
     @ApiResponses({  // Response Message에 대한 Swagger 설명
             @ApiResponse(code = 200, message = "OK", response = PostTodoRes.class)
     })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @PostMapping("/todo/{todoId}")
     public ResponseEntity<?> postPost(@PathVariable Long todoId, @RequestBody PostTodoReq postTodoReq){
         try {
