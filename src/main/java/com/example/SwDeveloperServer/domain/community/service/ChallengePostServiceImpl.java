@@ -1,8 +1,8 @@
 package com.example.SwDeveloperServer.domain.community.service;
 
-import com.example.SwDeveloperServer.domain.community.dto.GetChallengeRes;
-import com.example.SwDeveloperServer.domain.community.dto.PostChallengeReq;
-import com.example.SwDeveloperServer.domain.community.dto.PostChallengeRes;
+import com.example.SwDeveloperServer.domain.community.dto.res.GetChallengeRes;
+import com.example.SwDeveloperServer.domain.community.dto.req.PostChallengeReq;
+import com.example.SwDeveloperServer.domain.community.dto.res.PostResultRes;
 import com.example.SwDeveloperServer.domain.community.entity.ChallengePost;
 import com.example.SwDeveloperServer.domain.community.repository.ChallengePostPhotoRepository;
 import com.example.SwDeveloperServer.domain.community.repository.ChallengePostRepository;
@@ -29,7 +29,7 @@ public class ChallengePostServiceImpl implements ChallengePostService{
     }
 
     @Override
-    public PostChallengeRes setChallengePost(Long userId, PostChallengeReq postChallenegeReq) {
+    public PostResultRes setChallengePost(Long userId, PostChallengeReq postChallenegeReq) {
         Optional<User> user = userJpaRepository.findById(userId);
 
         ChallengePost challengePost = new ChallengePost();
@@ -53,7 +53,7 @@ public class ChallengePostServiceImpl implements ChallengePostService{
 
         challengePostRepository.save(challengePost);
 
-        return new PostChallengeRes("챌린지가 등록되었습니다.");
+        return new PostResultRes(challengePost.getChallengePostId(),"챌린지가 등록되었습니다.");
     }
 
     @Override

@@ -1,13 +1,13 @@
 package com.example.SwDeveloperServer.domain.community.service;
 
-import com.example.SwDeveloperServer.domain.community.dto.GetChallengeRes;
-import com.example.SwDeveloperServer.domain.community.dto.PostChallengeReq;
-import com.example.SwDeveloperServer.domain.community.dto.PostChallengeRes;
+import com.example.SwDeveloperServer.domain.community.dto.res.GetChallengeRes;
+import com.example.SwDeveloperServer.domain.community.dto.req.PostChallengeReq;
+import com.example.SwDeveloperServer.domain.community.dto.res.PostResultRes;
 
 import java.util.List;
 
 public interface ChallengePostService {
-    PostChallengeRes setChallengePost(Long userId, PostChallengeReq postChallenegeReq);
+    PostResultRes setChallengePost(Long userId, PostChallengeReq postChallenegeReq);
 
     List<GetChallengeRes> getChallengePosts(Long userId);
 

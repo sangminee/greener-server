@@ -1,4 +1,4 @@
-package com.example.SwDeveloperServer.domain.community.dto;
+package com.example.SwDeveloperServer.domain.community.dto.res;
 
 import com.example.SwDeveloperServer.domain.community.entity.ChallengePost;
 import lombok.Getter;

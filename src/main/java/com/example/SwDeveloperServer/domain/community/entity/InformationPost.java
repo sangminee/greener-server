@@ -29,4 +29,13 @@ public class InformationPost {
     private LocalDateTime infoCreateTime;
     private LocalDateTime infoUpdateTime;
     private int state;
+
+    public InformationPost(User user, String infoTitle, String infoContent,
+                           String infoTitlePhoto, LocalDateTime now, int state) {
+        this.user = user;
+        this.infoContent = infoContent;
+        this.infoTitlePhoto = infoTitlePhoto;
+        this.infoCreateTime = now;
+        this.state = state;
+    }
 }

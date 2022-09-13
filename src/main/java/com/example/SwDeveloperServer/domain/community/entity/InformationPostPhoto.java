@@ -1,6 +1,5 @@
 package com.example.SwDeveloperServer.domain.community.entity;
 
-import com.example.SwDeveloperServer.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +22,10 @@ public class InformationPostPhoto {
     private InformationPost informationPost;
 
     private String informationPostPhotoUrl;
+
+    public InformationPostPhoto(InformationPost informationPost, String url) {
+        this.informationPost = informationPost;
+        this.informationPostPhotoUrl = url;
+    }
+
 }

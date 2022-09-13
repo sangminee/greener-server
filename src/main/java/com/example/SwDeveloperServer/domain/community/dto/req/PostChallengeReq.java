@@ -1,4 +1,4 @@
-package com.example.SwDeveloperServer.domain.community.dto;
+package com.example.SwDeveloperServer.domain.community.dto.req;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
