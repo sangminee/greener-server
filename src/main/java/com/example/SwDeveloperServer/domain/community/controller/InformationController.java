@@ -1,5 +1,6 @@
 package com.example.SwDeveloperServer.domain.community.controller;
 
+import com.example.SwDeveloperServer.domain.community.service.InformationPostServiceImpl;
 import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.ResponseService;
 import io.swagger.annotations.Api;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class InformationController {
 
     private final ResponseService responseService;
+    private final InformationPostServiceImpl informationPostService;
     private final JwtService jwtService;
 
-    public InformationController(ResponseService responseService, JwtService jwtService) {
+    public InformationController(ResponseService responseService, InformationPostServiceImpl informationPostService, JwtService jwtService) {
         this.responseService = responseService;
+        this.informationPostService = informationPostService;
         this.jwtService = jwtService;
     }
 

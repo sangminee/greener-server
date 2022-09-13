@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,11 +24,12 @@ public class ChallengePost {
     @JoinColumn(name="userId")
     private User user;
 
-    private String listGoal;
+    private String challengeTitle;
 
     private LocalDateTime challengeCreatedAt;
     private String challengeTitlePhoto;
     private String challengePostContent;
+
     private LocalDateTime toStartDate;
     private LocalDateTime toEndDate;
     private LocalDateTime goalAlarmTime;
