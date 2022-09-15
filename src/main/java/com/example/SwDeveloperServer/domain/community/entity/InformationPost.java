@@ -1,5 +1,6 @@
 package com.example.SwDeveloperServer.domain.community.entity;
 
+import com.example.SwDeveloperServer.domain.community.dto.req.PostInfoReq;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,12 +31,12 @@ public class InformationPost {
     private LocalDateTime infoUpdateTime;
     private int state;
 
-    public InformationPost(User user, String infoTitle, String infoContent,
-                           String infoTitlePhoto, LocalDateTime now, int state) {
+    public InformationPost(User user, PostInfoReq postInfoReq) {
         this.user = user;
-        this.infoContent = infoContent;
-        this.infoTitlePhoto = infoTitlePhoto;
-        this.infoCreateTime = now;
-        this.state = state;
+        this.infoTitle = postInfoReq.getInfoTitle();
+        this.infoContent = postInfoReq.getInfoTitle();
+        this.infoTitlePhoto = postInfoReq.getInfoTitlePhoto();
+        this.infoCreateTime = LocalDateTime.now();
+        this.state = 0;
     }
 }

@@ -9,13 +9,18 @@ import com.example.SwDeveloperServer.domain.community.repository.InformationPost
 import com.example.SwDeveloperServer.domain.community.repository.InformationPostRepository;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
 public class InformationPostServiceImpl implements InformationPostService{
+
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final UserJpaRepository userJpaRepository;
     private final InformationPostRepository informationPostRepository;
@@ -28,24 +33,17 @@ public class InformationPostServiceImpl implements InformationPostService{
     }
 
     @Override
+    @Transactional
     public PostResultRes setInformationPost(Long userId, PostInfoReq postInfoReq) {
         Optional<User> user = userJpaRepository.findById(userId);
-
-        InformationPost informationPost = new InformationPost(user.get(),
-                postInfoReq.getInfoTitle(),
-                postInfoReq.getInfoContent(),
-                postInfoReq.getInfoTitlePhoto(),
-                LocalDateTime.now(),
-                0);
+        InformationPost informationPost = new InformationPost(user.get(), postInfoReq);
         informationPostRepository.save(informationPost);
 
-        if(postInfoReq.getPhotoList().size() !=0){
-            System.out.println(postInfoReq.getPhotoList().size());
-            for(int i=0; i<postInfoReq.getPhotoList().size(); i++){
-                // 오류
+        int size = postInfoReq.getPhotoList().size();
+        if(size != 0){
+            for(int i=0; i<size; i++){
                 InformationPostPhoto informationPostPhoto
-                        = new InformationPostPhoto(informationPost, postInfoReq.getPhotoList().peek());
-                postInfoReq.getPhotoList().remove(0);
+                        = new InformationPostPhoto(informationPost, postInfoReq.getPhotoList().poll());
                 informationPostPhotoRepository.save(informationPostPhoto);
             }
         }
@@ -55,31 +53,10 @@ public class InformationPostServiceImpl implements InformationPostService{
     @Override
     public List<GetInformRes> getInformationPosts(Long userId) {
         List<InformationPost> informationPosts = informationPostRepository.findAll();
-
         List<GetInformRes> getInformResList = new ArrayList<>();
-
         for(int i=0; i<informationPosts.size(); i++){
-            List<InformationPostPhoto> informationPostPhotos =  informationPostPhotoRepository.findByInformationPost(informationPosts.get(i));
-
-            List<String> getPhoto = new LinkedList<>();
-
-//            if(informationPostPhotos.size() != 0){
-//                for(int j=0; j<informationPosts.size(); j++){
-////                    System.out.println(informationPostPhotos.get(j).getInformationPostPhotoUrl());
-//                    getPhoto.add(informationPostPhotos.get(j).getInformationPostPhotoUrl());
-//                }
-//            }
-
-            GetInformRes getInformRes = new GetInformRes(informationPosts.get(i).getUser().getUserId(),
-                    informationPosts.get(i).getUser().getEmail(),
-                    informationPosts.get(i).getUser().getName(),
-                    getPhoto,
-                    informationPosts.get(i).getInformationPostId(),
-                    informationPosts.get(i).getInfoTitle(),
-                    informationPosts.get(i).getInfoContent(),
-                    informationPosts.get(i).getInfoTitlePhoto(),
-                    informationPosts.get(i).getInfoCreateTime(),
-                    informationPosts.get(i).getInfoUpdateTime());
+            List<String> getPhoto = getPhotos(informationPosts.get(i));
+            GetInformRes getInformRes = new GetInformRes(informationPosts.get(i),getPhoto);
             getInformResList.add(getInformRes);
         }
         return getInformResList;
@@ -88,26 +65,20 @@ public class InformationPostServiceImpl implements InformationPostService{
     @Override
     public GetInformRes getInformationPost(Long userId, Long informationPostId) {
         Optional<InformationPost> informationPost = informationPostRepository.findById(informationPostId);
-
-        List<InformationPostPhoto> informationPostPhotos =  informationPostPhotoRepository.findByInformationPost(informationPost.get());
-        List<String> getPhoto = new LinkedList<>();
-//            if(informationPostPhotos.size() != 0){
-//                for(int j=0; j<informationPosts.size(); j++){
-////                    System.out.println(informationPostPhotos.get(j).getInformationPostPhotoUrl());
-//                    getPhoto.add(informationPostPhotos.get(j).getInformationPostPhotoUrl());
-//                }
-//            }
-
-        GetInformRes getInformRes = new GetInformRes(informationPost.get().getUser().getUserId(),
-                informationPost.get().getUser().getEmail(),
-                informationPost.get().getUser().getName(),
-                getPhoto,
-                informationPost.get().getInformationPostId(),
-                informationPost.get().getInfoTitle(),
-                informationPost.get().getInfoContent(),
-                informationPost.get().getInfoTitlePhoto(),
-                informationPost.get().getInfoCreateTime(),
-                informationPost.get().getInfoUpdateTime());
+        List<String> getPhoto = getPhotos(informationPost.get());
+        GetInformRes getInformRes = new GetInformRes(informationPost.get(),getPhoto);
         return getInformRes;
+    }
+
+    public List<String> getPhotos(InformationPost informationPost){
+        List<String> getPhotos = new LinkedList<>();
+        List<InformationPostPhoto> informationPostPhotos =  informationPostPhotoRepository.findByInformationPost(informationPost);
+        int size = informationPostPhotos.size();
+        if(size != 0){
+            for(int i=0; i<size; i++){
+                getPhotos.add(informationPostPhotos.get(i).getInformationPostPhotoUrl());
+            }
+        }
+        return getPhotos;
     }
 }

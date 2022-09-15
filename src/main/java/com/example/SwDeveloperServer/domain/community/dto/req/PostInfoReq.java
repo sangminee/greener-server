@@ -15,5 +15,4 @@ public class PostInfoReq {
     private String infoTitlePhoto;
 
     private Queue<String> photoList;
-
 }

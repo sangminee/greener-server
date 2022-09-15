@@ -13,19 +13,14 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChallengePostComment {
+public class HowToParticipate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long challengePostCommentId;
-
-    @ManyToOne
-    @JoinColumn(name="userId")
-    private User user;
+    private long howToParticipateId;
 
     @ManyToOne
     @JoinColumn(name="challengePostId")
     private ChallengePost challengePost;
 
-    private String challengeComment;
-    private int challengeGrade;
+    private String challengeContent;
 }

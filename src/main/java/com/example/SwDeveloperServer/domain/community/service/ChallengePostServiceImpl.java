@@ -6,6 +6,7 @@ import com.example.SwDeveloperServer.domain.community.dto.res.PostResultRes;
 import com.example.SwDeveloperServer.domain.community.entity.ChallengePost;
 import com.example.SwDeveloperServer.domain.community.repository.ChallengePostPhotoRepository;
 import com.example.SwDeveloperServer.domain.community.repository.ChallengePostRepository;
+import com.example.SwDeveloperServer.domain.community.repository.ChallengePostTagRepository;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
 import org.springframework.stereotype.Service;
@@ -18,40 +19,37 @@ import java.util.Optional;
 
 @Service
 public class ChallengePostServiceImpl implements ChallengePostService{
+
     private final UserJpaRepository userJpaRepository;
     private final ChallengePostRepository challengePostRepository;
     private final ChallengePostPhotoRepository challengePostPhotoRepository;
+    private final ChallengePostTagRepository challengePostTagRepository;
 
-    public ChallengePostServiceImpl(UserJpaRepository userJpaRepository, ChallengePostRepository challengePostRepository, ChallengePostPhotoRepository challengePostPhotoRepository) {
+    public ChallengePostServiceImpl(UserJpaRepository userJpaRepository, ChallengePostRepository challengePostRepository,
+                                    ChallengePostPhotoRepository challengePostPhotoRepository, ChallengePostTagRepository challengePostTagRepository) {
         this.userJpaRepository = userJpaRepository;
         this.challengePostRepository = challengePostRepository;
         this.challengePostPhotoRepository = challengePostPhotoRepository;
+        this.challengePostTagRepository = challengePostTagRepository;
     }
 
+    // 사진, 설명 방법, 태그 추가하기
     @Override
-    public PostResultRes setChallengePost(Long userId, PostChallengeReq postChallenegeReq) {
+    public PostResultRes setChallengePost(Long userId, PostChallengeReq postChallengeReq) {
         Optional<User> user = userJpaRepository.findById(userId);
-
-        ChallengePost challengePost = new ChallengePost();
-        challengePost.setUser(user.get());
-        challengePost.setChallengeTitle(postChallenegeReq.getChallengeTitle());
-
-        challengePost.setChallengeCreatedAt(LocalDateTime.now());
-        challengePost.setChallengeTitlePhoto(postChallenegeReq.getChallengeTitlePhoto());
-        challengePost.setChallengePostContent(postChallenegeReq.getChallengePostContent());
-
-        String startDate = postChallenegeReq.getToStartDate()+" 00:00:00";
-        String endDate = postChallenegeReq.getToEndDate()+" 23:59:59";
-
+        String startDate = postChallengeReq.getToStartDate()+" 00:00:00";
+        String endDate = postChallengeReq.getToEndDate()+" 23:59:59";
         LocalDateTime getStartDate = LocalDateTime.parse(startDate,
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime getEndDate = LocalDateTime.parse(endDate,
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        challengePost.setToStartDate(getStartDate);
-        challengePost.setToEndDate(getEndDate);
-
+        ChallengePost challengePost = new ChallengePost(user.get(), postChallengeReq,getStartDate,getEndDate);
         challengePostRepository.save(challengePost);
+
+        // 설명 방법
+        // 사진
+        // 태그
 
         return new PostResultRes(challengePost.getChallengePostId(),"챌린지가 등록되었습니다.");
     }
@@ -59,45 +57,20 @@ public class ChallengePostServiceImpl implements ChallengePostService{
     @Override
     public List<GetChallengeRes> getChallengePosts(Long userId) {
         List<ChallengePost> challengePosts = challengePostRepository.findAll();
-
         List<GetChallengeRes> getChallengeResList = new ArrayList<>();
         for(int i=0; i<challengePosts.size(); i++){
-            GetChallengeRes getChallengeRes = new GetChallengeRes();
-            getChallengeRes.setUserId(challengePosts.get(i).getUser().getUserId());
-            getChallengeRes.setEmail(challengePosts.get(i).getUser().getEmail());
-            getChallengeRes.setName(challengePosts.get(i).getUser().getName());
-
-            getChallengeRes.setChallengeTitle(challengePosts.get(i).getChallengeTitle());
-            getChallengeRes.setChallengeCreatedAt(challengePosts.get(i).getChallengeCreatedAt());
-            getChallengeRes.setChallengeTitlePhoto(challengePosts.get(i).getChallengeTitlePhoto());
-            getChallengeRes.setChallengePostContent(challengePosts.get(i).getChallengePostContent());
-
-            getChallengeRes.setToStartDate(challengePosts.get(i).getToStartDate());
-            getChallengeRes.setToEndDate(challengePosts.get(i).getToEndDate());
-
+            GetChallengeRes getChallengeRes = new GetChallengeRes(challengePosts.get(i));
             getChallengeResList.add(getChallengeRes);
         }
-
         return getChallengeResList;
     }
 
+    // 챌린지 후기(댓글) 추가
     @Override
     public GetChallengeRes getChallengePost(Long userId, Long challengePostId) {
         Optional<ChallengePost> challengePost = challengePostRepository.findById(challengePostId);
-
-        GetChallengeRes getChallengeRes = new GetChallengeRes();
-        getChallengeRes.setUserId(challengePost.get().getUser().getUserId());
-        getChallengeRes.setEmail(challengePost.get().getUser().getEmail());
-        getChallengeRes.setName(challengePost.get().getUser().getName());
-
-        getChallengeRes.setChallengeTitle(challengePost.get().getChallengeTitle());
-        getChallengeRes.setChallengeCreatedAt(challengePost.get().getChallengeCreatedAt());
-        getChallengeRes.setChallengeTitlePhoto(challengePost.get().getChallengeTitlePhoto());
-        getChallengeRes.setChallengePostContent(challengePost.get().getChallengePostContent());
-
-        getChallengeRes.setToStartDate(challengePost.get().getToStartDate());
-        getChallengeRes.setToEndDate(challengePost.get().getToEndDate());
-
+        GetChallengeRes getChallengeRes = new GetChallengeRes(challengePost.get());
         return getChallengeRes;
     }
+
 }

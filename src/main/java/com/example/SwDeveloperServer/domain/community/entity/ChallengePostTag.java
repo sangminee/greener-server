@@ -22,4 +22,6 @@ public class ChallengePostTag {
     private ChallengePost challengePost;
 
     private String tagContent;
+
+    // 태그 유형 - 사진인증횟수, 챌린지 기간
 }
