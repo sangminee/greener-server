@@ -12,19 +12,19 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChallengePostPhoto {
+public class ChallengeHowToParticipate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long challengePostPhotoId;
+    private long howToParticipateId;
 
     @ManyToOne
     @JoinColumn(name="challengePostId")
     private ChallengePost challengePost;
 
-    private String challengePostPhotoUrl;
+    private String challengeContent;
 
-    public ChallengePostPhoto(ChallengePost challengePost, String url) {
+    public ChallengeHowToParticipate(ChallengePost challengePost, String content) {
         this.challengePost = challengePost;
-        this.challengePostPhotoUrl = url;
+        this.challengeContent = content;
     }
 }

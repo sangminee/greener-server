@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,15 +30,19 @@ public class GetChallengeRes {
     private LocalDateTime toStartDate;
     private LocalDateTime toEndDate;
 
+    // 챌린지 정보 사진
+    private List<String> photos;
     // 챌린지 방법
+    private List<String> howTo;
+    // 챌린지 태그
+    private List<String> tags;
+
 
     // 챌린지 후기 정보
 
-    // 챌린지 태그
-
     // 현재 참여하고 있는 유저
 
-    public GetChallengeRes(ChallengePost challengePost){
+    public GetChallengeRes(ChallengePost challengePost, List<String> getPhotos, List<String> getGetHowTo, List<String> getTags){
         this.userId = challengePost.getUser().getUserId();
         this.email = challengePost.getUser().getEmail();
         this.name = challengePost.getUser().getName();
@@ -48,5 +53,9 @@ public class GetChallengeRes {
         this.limitPeople =challengePost.getLimitPeople();
         this.toStartDate=challengePost.getToStartDate();
         this.toEndDate=challengePost.getToEndDate();
+
+        this.photos = getPhotos;
+        this.howTo = getGetHowTo;
+        this.tags = getTags;
     }
 }

@@ -24,4 +24,9 @@ public class ChallengePostTag {
     private String tagContent;
 
     // 태그 유형 - 사진인증횟수, 챌린지 기간
+
+    public ChallengePostTag(ChallengePost challengePost, String content) {
+        this.challengePost = challengePost;
+        this.tagContent = content;
+    }
 }
