@@ -1,6 +1,7 @@
 package com.example.SwDeveloperServer.domain.community.controller;
 
 import com.example.SwDeveloperServer.domain.community.dto.req.PostInfoReq;
+import com.example.SwDeveloperServer.domain.community.dto.res.DeleteResultRes;
 import com.example.SwDeveloperServer.domain.community.dto.res.GetInformRes;
 import com.example.SwDeveloperServer.domain.community.dto.res.PostResultRes;
 import com.example.SwDeveloperServer.domain.community.service.InformationPostServiceImpl;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Api(tags ="7. 커뮤니티 - 정보 API ")
+@Api(tags ="8. 커뮤니티 - 정보 API ")
 public class InformationController {
 
     private final ResponseService responseService;
@@ -85,9 +86,44 @@ public class InformationController {
         }
     }
 
-
     /**
      * 정보 스크랩 하기 API
      */
+    @ApiOperation(value = "정보 스크랩")
+    @ApiResponses({  // Response Message 에 대한 Swagger 설명
+            @ApiResponse(code = 200, message = "OK", response = PostResultRes.class),
+            @ApiResponse(code = 2044, message = "이미 스크랩되었습니다.")
+    })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
+    @PostMapping("/Information/{informationPostId}")
+    public ResponseEntity<?> setInformationPostScrap(@PathVariable Long informationPostId) throws BaseException {
+        try {
+            Long userId = jwtService.getUserIdx();
+            PostResultRes postResultRes = informationPostService.setInformationPostScrap(userId,informationPostId);
+            return responseService.successResult(postResultRes, SuccessStatus.SUCCESS);
+        } catch (BaseException exception) {
+            return responseService.errorResult(exception.getErrorStatus());
+        }
+    }
+
+    /**
+     * 정보 스크랩 취소하기 API
+     */
+    @ApiOperation(value = "정보 스크랩 취소하기")
+    @ApiResponses({  // Response Message 에 대한 Swagger 설명
+            @ApiResponse(code = 200, message = "OK", response = DeleteResultRes.class),
+            @ApiResponse(code = 2045, message = "스크랩을 취소할 권한이 없습니다.")
+    })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
+    @DeleteMapping("/Information/scrap/{informationPostScrapId}")
+    public ResponseEntity<?> deleteInformationPostScrap(@PathVariable Long informationPostScrapId) throws BaseException {
+        try {
+            Long userId = jwtService.getUserIdx();
+            DeleteResultRes deleteResultRes = informationPostService.deleteInformationPostScrap(userId,informationPostScrapId);
+            return responseService.successResult(deleteResultRes, SuccessStatus.SUCCESS);
+        } catch (BaseException exception) {
+            return responseService.errorResult(exception.getErrorStatus());
+        }
+    }
 
 }

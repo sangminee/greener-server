@@ -29,4 +29,11 @@ public class InformationPostScrap {
 
     private LocalDateTime scrapCreateTime;
     private int state;
+
+    public InformationPostScrap(User user, InformationPost informationPost) {
+        this.user = user;
+        this.informationPost = informationPost;
+        this.scrapCreateTime = LocalDateTime.now();
+        this.state = 0;
+    }
 }

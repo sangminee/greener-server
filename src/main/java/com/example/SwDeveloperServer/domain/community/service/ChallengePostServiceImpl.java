@@ -203,7 +203,7 @@ public class ChallengePostServiceImpl implements ChallengePostService{
         if(challengePostComment.get().getUser().getUserId() != userId){
             throw new BaseException(ErrorStatus.INVALID_CHALLENGE_POST_COMMENT_USER);
         }
-        DeleteResultRes deleteResultRes = new DeleteResultRes(challengePostComment.get());
+        DeleteResultRes deleteResultRes = new DeleteResultRes(challengePostComment.get().getChallengePostCommentId());
         challengePostCommentRepository.delete(challengePostComment.get());
         return deleteResultRes;
     }

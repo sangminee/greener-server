@@ -1,20 +1,24 @@
 package com.example.SwDeveloperServer.domain.community.service;
 
 import com.example.SwDeveloperServer.domain.community.dto.req.PostInfoReq;
+import com.example.SwDeveloperServer.domain.community.dto.res.DeleteResultRes;
 import com.example.SwDeveloperServer.domain.community.dto.res.GetInformRes;
 import com.example.SwDeveloperServer.domain.community.dto.res.PostResultRes;
 import com.example.SwDeveloperServer.domain.community.entity.InformationPost;
 import com.example.SwDeveloperServer.domain.community.entity.InformationPostPhoto;
+import com.example.SwDeveloperServer.domain.community.entity.InformationPostScrap;
 import com.example.SwDeveloperServer.domain.community.repository.InformationPostPhotoRepository;
 import com.example.SwDeveloperServer.domain.community.repository.InformationPostRepository;
+import com.example.SwDeveloperServer.domain.community.repository.InformationPostScrapRepository;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
+import com.example.SwDeveloperServer.utils.response.BaseException;
+import com.example.SwDeveloperServer.utils.response.ErrorStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -25,11 +29,14 @@ public class InformationPostServiceImpl implements InformationPostService{
     private final UserJpaRepository userJpaRepository;
     private final InformationPostRepository informationPostRepository;
     private final InformationPostPhotoRepository informationPostPhotoRepository;
+    private final InformationPostScrapRepository informationPostScrapRepository;
 
-    public InformationPostServiceImpl(UserJpaRepository userJpaRepository, InformationPostRepository informationPostRepository, InformationPostPhotoRepository informationPostPhotoRepository) {
+    public InformationPostServiceImpl(UserJpaRepository userJpaRepository, InformationPostRepository informationPostRepository,
+                                      InformationPostPhotoRepository informationPostPhotoRepository, InformationPostScrapRepository informationPostScrapRepository) {
         this.userJpaRepository = userJpaRepository;
         this.informationPostRepository = informationPostRepository;
         this.informationPostPhotoRepository = informationPostPhotoRepository;
+        this.informationPostScrapRepository = informationPostScrapRepository;
     }
 
     @Override
@@ -80,5 +87,33 @@ public class InformationPostServiceImpl implements InformationPostService{
             }
         }
         return getPhotos;
+    }
+
+    @Override
+    public PostResultRes setInformationPostScrap(Long userId, Long informationPostId) throws BaseException {
+        Optional<User> user = userJpaRepository.findById(userId);
+        Optional<InformationPost> informationPost = informationPostRepository.findById(informationPostId);
+        List<InformationPostScrap> getScrap = informationPostScrapRepository.findByInformationPost(informationPost.get());
+        for(int i=0; i<getScrap.size(); i++){
+            if(getScrap.get(i).getUser().equals(user.get())){
+                throw new BaseException(ErrorStatus.EXIST_INFO_POST_SCRAP);
+            }
+        }
+        InformationPostScrap informationPostScrap = new InformationPostScrap(user.get(), informationPost.get());
+        informationPostScrapRepository.save(informationPostScrap);
+        return new PostResultRes(informationPostScrap.getInformationPostScrapId(),"스크랩 완료되었습니다.");
+    }
+
+    @Override
+    public DeleteResultRes deleteInformationPostScrap(Long userId, Long informationPostScrapId) throws BaseException {
+        Optional<User> user = userJpaRepository.findById(userId);
+        Optional<InformationPostScrap> informationPostScrap = informationPostScrapRepository.findById(informationPostScrapId);
+
+        if(!informationPostScrap.get().getUser().equals(user.get())){
+            throw new BaseException(ErrorStatus.INVALID_INFO_POST_SCRAP_USER);
+        }
+        DeleteResultRes deleteResultRes = new DeleteResultRes(informationPostScrap.get().getInformationPostScrapId());
+        informationPostScrapRepository.delete(informationPostScrap.get());
+        return deleteResultRes;
     }
 }

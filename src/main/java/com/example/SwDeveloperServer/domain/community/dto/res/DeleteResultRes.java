@@ -14,8 +14,8 @@ public class DeleteResultRes {
     private Long id;
     private String message;
 
-    public DeleteResultRes(ChallengePostComment challengePostComment) {
-        this.id = challengePostComment.getChallengePostCommentId();
+    public DeleteResultRes(Long id) {
+        this.id = id;
         this.message = "삭제되었습니다.";
     }
 }

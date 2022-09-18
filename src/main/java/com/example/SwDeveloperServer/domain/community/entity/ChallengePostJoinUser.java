@@ -31,6 +31,6 @@ public class ChallengePostJoinUser {
     public ChallengePostJoinUser(User user, ChallengePost challengePost) {
         this.user = user;
         this.challengePost = challengePost;
-        this.state = 0; // 0 :참여, 1 : 참여 x
+        this.state = 0; // 0 : 진행중인 챌린지, 1 : 진행 종료된 챌린지
     }
 }

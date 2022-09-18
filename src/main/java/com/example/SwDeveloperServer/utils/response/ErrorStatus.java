@@ -39,7 +39,10 @@ public enum ErrorStatus {
     INVALID_CHALLENGE_POST_COMMENT(false,2041,"존재하지 않은 챌린지 후기입니다."),
     INVALID_CHALLENGE_POST_COMMENT_USER(false,2042,"삭제 권한이 없는 유저입니다."),
 
-    EXIST_CHALLENGE_POST_JOIN_USER(false,2043,"이미 참여 중인 유저입니다."),
+    EXIST_CHALLENGE_POST_JOIN_USER(false,2043,"이미 해당 챌린지에 참여 중인 유저입니다."),
+
+    EXIST_INFO_POST_SCRAP(false,2044,"이미 스크랩되었습니다."),
+    INVALID_INFO_POST_SCRAP_USER(false,2045,"스크랩을 취소할 권한이 없습니다."),
 
     DATABASE_ERROR(false, 4000, "데이터베이스 연결에 실패하였습니다."),
     SERVER_ERROR(false, 4001, "서버와의 연결에 실패하였습니다.");
