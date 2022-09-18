@@ -26,5 +26,11 @@ public class ChallengePostJoinUser {
     @JoinColumn(name="challengePostId")
     private ChallengePost challengePost;
 
+    private int state;
 
+    public ChallengePostJoinUser(User user, ChallengePost challengePost) {
+        this.user = user;
+        this.challengePost = challengePost;
+        this.state = 0; // 0 :참여, 1 : 참여 x
+    }
 }

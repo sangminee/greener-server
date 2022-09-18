@@ -36,13 +36,12 @@ public class GetChallengeRes {
     private List<String> howTo;
     // 챌린지 태그
     private List<String> tags;
-
-
-    // 챌린지 후기 정보
+    // 챌린지 후기
+    private List<GetCommentRes> comments;
 
     // 현재 참여하고 있는 유저
 
-    public GetChallengeRes(ChallengePost challengePost, List<String> getPhotos, List<String> getGetHowTo, List<String> getTags){
+    public GetChallengeRes(ChallengePost challengePost, List<String> getPhotos, List<String> getGetHowTo, List<String> getTags, List<GetCommentRes> getComments){
         this.userId = challengePost.getUser().getUserId();
         this.email = challengePost.getUser().getEmail();
         this.name = challengePost.getUser().getName();
@@ -57,5 +56,6 @@ public class GetChallengeRes {
         this.photos = getPhotos;
         this.howTo = getGetHowTo;
         this.tags = getTags;
+        this.comments = getComments;
     }
 }

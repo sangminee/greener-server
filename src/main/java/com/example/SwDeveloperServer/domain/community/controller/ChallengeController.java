@@ -1,8 +1,7 @@
 package com.example.SwDeveloperServer.domain.community.controller;
 
-import com.example.SwDeveloperServer.domain.community.dto.res.GetChallengeRes;
-import com.example.SwDeveloperServer.domain.community.dto.req.PostChallengeReq;
-import com.example.SwDeveloperServer.domain.community.dto.res.PostResultRes;
+import com.example.SwDeveloperServer.domain.community.dto.req.*;
+import com.example.SwDeveloperServer.domain.community.dto.res.*;
 import com.example.SwDeveloperServer.domain.community.service.ChallengePostServiceImpl;
 import com.example.SwDeveloperServer.utils.jwt.JwtService;
 import com.example.SwDeveloperServer.utils.response.BaseException;
@@ -59,7 +58,7 @@ public class ChallengeController {
     public ResponseEntity<?> getChallengePosts() throws BaseException {
         try {
             Long userId = jwtService.getUserIdx();
-            List<GetChallengeRes> getChallengeResList = challengePostService.getChallengePosts(userId);
+            List<GetChallengeRes> getChallengeResList = challengePostService.getChallengePosts();
             return responseService.successResult(getChallengeResList, SuccessStatus.SUCCESS);
         } catch (BaseException exception) {
             return responseService.errorResult(exception.getErrorStatus());
@@ -78,7 +77,7 @@ public class ChallengeController {
     public ResponseEntity<?> getChallengePost(@PathVariable Long challengePostId) throws BaseException {
         try {
             Long userId = jwtService.getUserIdx();
-            GetChallengeRes getChallengeRes = challengePostService.getChallengePost(userId,challengePostId);
+            GetChallengeRes getChallengeRes = challengePostService.getChallengePost(challengePostId);
             return responseService.successResult(getChallengeRes, SuccessStatus.SUCCESS);
         } catch (BaseException exception) {
             return responseService.errorResult(exception.getErrorStatus());
@@ -86,12 +85,24 @@ public class ChallengeController {
     }
 
     /**
-     * 댓글 달기 API
+     * 챌린지 참여하기 API
      */
-
-    /**
-     * 댓글 삭제 하기 API
-     */
-
+    @ApiOperation(value = "챌린지 참여하기")
+    @ApiResponses({  // Response Message 에 대한 Swagger 설명
+            @ApiResponse(code = 200, message = "OK", response = PostResultRes.class),
+            @ApiResponse(code = 2040, message = "존재하지 않은 챌린지입니다."),
+            @ApiResponse(code = 2043, message = "이미 참여 중인 유저입니다.")
+    })
+    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
+    @PostMapping("/challenge/{challengePostId}")
+    public ResponseEntity<?> setChallengeJoin(@PathVariable Long challengePostId) throws BaseException {
+        try {
+            Long userId = jwtService.getUserIdx();
+            PostResultRes postResultRes = challengePostService.setChallengeJoin(userId, challengePostId);
+            return responseService.successResult(postResultRes, SuccessStatus.SUCCESS);
+        } catch (BaseException exception) {
+            return responseService.errorResult(exception.getErrorStatus());
+        }
+    }
 
 }

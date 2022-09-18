@@ -1,5 +1,6 @@
 package com.example.SwDeveloperServer.domain.community.entity;
 
+import com.example.SwDeveloperServer.domain.community.dto.req.PostCommentReq;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +28,13 @@ public class ChallengePostComment {
     private ChallengePost challengePost;
 
     private String challengeComment;
-    private int challengeGrade;
+    private int challengeGrade; // 별점
+
+    public ChallengePostComment(User user, ChallengePost challengePost,
+                                PostCommentReq postCommentReq) {
+        this.user = user;
+        this.challengePost = challengePost;
+        this.challengeComment = postCommentReq.getChallengeComment();
+        this.challengeGrade = postCommentReq.getChallengeGrade();
+    }
 }
