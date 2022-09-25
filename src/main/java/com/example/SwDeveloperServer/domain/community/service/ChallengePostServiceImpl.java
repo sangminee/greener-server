@@ -10,6 +10,7 @@ import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.ErrorStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Validated
 @Service
 public class ChallengePostServiceImpl implements ChallengePostService{
 
@@ -39,6 +41,21 @@ public class ChallengePostServiceImpl implements ChallengePostService{
         this.challengePostCommentRepository = challengePostCommentRepository;
         this.challengePostJoinRepository = challengePostJoinRepository;
     }
+//
+//    public enum EPhotoTag{
+//        a1("주 1회"),
+//        a2("주 2~4회"),
+//        a3("주 5~6회"),
+//        a4("월~금"),
+//        a5("주말(토, 일)"),
+//        a6("매일");
+//
+//        private String content;
+//        private EPhotoTag(String content){
+//            this.content = content;
+//
+//        }
+//    }
 
     @Override
     @Transactional

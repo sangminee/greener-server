@@ -11,6 +11,7 @@ import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class ChallengeController {
     })
     @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
     @PostMapping("/challenge")
-    public ResponseEntity<?> setChallengePost(@RequestBody PostChallengeReq postChallengeReq) throws BaseException {
+    public ResponseEntity<?> setChallengePost(@RequestBody @Valid PostChallengeReq postChallengeReq) throws BaseException {
         try {
             Long userId = jwtService.getUserIdx();
             PostResultRes postChallengeRes = challengePostService.setChallengePost(userId, postChallengeReq);
@@ -104,5 +105,28 @@ public class ChallengeController {
             return responseService.errorResult(exception.getErrorStatus());
         }
     }
+
+    /**
+     * 챌린지 종료 API
+     */
+//    @ApiOperation(value = "챌린지 종료")
+//    @ApiResponses({  // Response Message 에 대한 Swagger 설명
+//            @ApiResponse(code = 200, message = "OK", response = PostResultRes.class),
+//            @ApiResponse(code = 2040, message = "존재하지 않은 챌린지입니다."),
+//            @ApiResponse(code = 2043, message = "이미 참여 중인 유저입니다.")
+//    })
+//    @ApiImplicitParams(@ApiImplicitParam(name="JWT", value = "X-ACCESS-TOKEN", required = true, dataType = "string", paramType = "header"))
+//    @PostMapping("/challenge/{challengePostId}")
+//    public ResponseEntity<?> finishChallengeJoin(@PathVariable Long challengePostId) throws BaseException {
+//        try {
+//            Long userId = jwtService.getUserIdx();
+//            PostResultRes postResultRes = challengePostService.finishChallengeJoin(userId, challengePostId);
+//            return responseService.successResult(postResultRes, SuccessStatus.SUCCESS);
+//        } catch (BaseException exception) {
+//            return responseService.errorResult(exception.getErrorStatus());
+//        }
+//    }
+
+
 
 }
