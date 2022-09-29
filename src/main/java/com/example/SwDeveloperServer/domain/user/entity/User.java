@@ -14,6 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
@@ -33,6 +34,8 @@ public class User {
     private int phoneAgreement;
     private int userType;
     private int state;
+
+    private String refreshToken;
 
     @OneToOne
     @JoinColumn(name = "plantId")
