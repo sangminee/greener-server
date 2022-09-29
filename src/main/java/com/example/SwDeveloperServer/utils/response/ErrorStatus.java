@@ -24,15 +24,15 @@ public enum ErrorStatus {
     POST_USERS_EMPTY_PHOTO_URL(false, 2016, "사진 URL를 제대로를 입력해주세요."),
 
     // 챌린지
-//    POST_EMPTY_CHALLENGE_POST_TITLE(false,2020,"챌린지 제목을 입력해주세요."),
-//    POST_EMPTY_CHALLENGE_POST_PHOTO(false,2021,"챌린지 제목을 입력해주세요."),
-//    POST_EMPTY_CHALLENGE_POST_SUCCESS_POINT(false,2022,"획득 포인트를 입력해주세요."),
-//    POST_EMPTY_CHALLENGE_POST_LIMIT_PEOPLE(false,2023,"인원 제한를 입력해주세요."),
-//    POST_EMPTY_CHALLENGE_POST_TO_START_DATE(false,2024,"챌린지 시작날짜를 입력해주세요."),
-//    POST_CHECK_CHALLENGE_POST_TO_START_DATE(false,2024,"챌린지 시작날짜를 형식에 맞게 입력해주세요."),
-//    POST_EMPTY_CHALLENGE_POST_TO_END_DATE(false,2025,"챌린지 종료 날짜를 입력해주세요."),
-//    POST_CHECK_CHALLENGE_POST_TO_END_DATE(false,2025,"챌린지 종료 날짜를 형식에 맞게 입력해주세요."),
-//    POST_EMPTY_CHALLENGE_POST_GET_HOW_TO(false,2026,"참여방법을 입력해주세요."),
+    POST_EMPTY_CHALLENGE_POST_TITLE(false,2020,"챌린지 제목을 입력해주세요."),
+    POST_EMPTY_CHALLENGE_POST_PHOTO(false,2021,"챌린지 제목을 입력해주세요."),
+    POST_EMPTY_CHALLENGE_POST_SUCCESS_POINT(false,2022,"획득 포인트를 입력해주세요."),
+    POST_EMPTY_CHALLENGE_POST_LIMIT_PEOPLE(false,2023,"인원 제한를 입력해주세요."),
+    POST_EMPTY_CHALLENGE_POST_TO_START_DATE(false,2024,"챌린지 시작날짜를 입력해주세요."),
+    POST_CHECK_CHALLENGE_POST_TO_START_DATE(false,2024,"챌린지 시작날짜를 형식에 맞게 입력해주세요."),
+    POST_EMPTY_CHALLENGE_POST_TO_END_DATE(false,2025,"챌린지 종료 날짜를 입력해주세요."),
+    POST_CHECK_CHALLENGE_POST_TO_END_DATE(false,2025,"챌린지 종료 날짜를 형식에 맞게 입력해주세요."),
+    POST_EMPTY_CHALLENGE_POST_GET_HOW_TO(false,2026,"참여방법을 입력해주세요."),
 
 
     INVALID_CHALLENGE_POST(false,2040,"존재하지 않은 챌린지입니다."),
