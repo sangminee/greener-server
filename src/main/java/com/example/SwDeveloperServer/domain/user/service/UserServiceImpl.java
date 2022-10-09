@@ -60,6 +60,7 @@ public class UserServiceImpl implements UerService {
     @Override
     public PostJoinRes join(PostJoinReq postJoinReq) throws BaseException {
         User user = postJoinReq.toEntity();
+
         Optional<PlantPhoto> getPlantPhoto = plantPhotoRepository.findById((long)1);
         user.setPlantPhoto(getPlantPhoto.get());
 

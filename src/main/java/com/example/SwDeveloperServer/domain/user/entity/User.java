@@ -1,6 +1,7 @@
 package com.example.SwDeveloperServer.domain.user.entity;
 
 import com.example.SwDeveloperServer.domain.user.enums.UserJoinType;
+import com.example.SwDeveloperServer.domain.user.enums.UserState;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,7 +33,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserJoinType userType;
 
-    private int state;
+    @Enumerated(EnumType.STRING)
+    private UserState state;
 
     @OneToOne
     @JoinColumn(name = "plant_Id")
@@ -41,7 +43,7 @@ public class User {
     @Builder
     public User(String email, String password, String name, String nickname,
                 String userPhotoUrl, String phone,
-                int userServiceAgreement, int phoneAgreement, String userType, int state){
+                int userServiceAgreement, int phoneAgreement, String userType){
 
         this.email = email;
         this.password = password;
@@ -54,6 +56,6 @@ public class User {
         this.userServiceAgreement = userServiceAgreement;
         this.phoneAgreement = phoneAgreement;
         this.userType = UserJoinType.valueOf(userType);
-        this.state = state;
+        this.state = UserState.ACTIVE;
     }
 }
