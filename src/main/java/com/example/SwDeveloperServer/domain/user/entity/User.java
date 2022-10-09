@@ -1,19 +1,15 @@
 package com.example.SwDeveloperServer.domain.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.SwDeveloperServer.domain.user.enums.UserJoinType;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "users")
 public class User {
 
@@ -32,12 +28,32 @@ public class User {
 
     private int userServiceAgreement;
     private int phoneAgreement;
-    private int userType;
+
+    @Enumerated(EnumType.STRING)
+    private UserJoinType userType;
+
     private int state;
 
-    private String refreshToken;
-
     @OneToOne
-    @JoinColumn(name = "plantId")
+    @JoinColumn(name = "plant_Id")
     private PlantPhoto plantPhoto;
+
+    @Builder
+    public User(String email, String password, String name, String nickname,
+                String userPhotoUrl, String phone,
+                int userServiceAgreement, int phoneAgreement, String userType, int state){
+
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+        this.userPhotoUrl = userPhotoUrl;
+        this.phone = phone;
+        this.userCreateTime = LocalDateTime.now();
+
+        this.userServiceAgreement = userServiceAgreement;
+        this.phoneAgreement = phoneAgreement;
+        this.userType = UserJoinType.valueOf(userType);
+        this.state = state;
+    }
 }

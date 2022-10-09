@@ -17,10 +17,12 @@ import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 import static com.example.SwDeveloperServer.utils.response.ErrorStatus.*;
@@ -46,7 +48,10 @@ public class UserController {
             @ApiResponse(code = 200, message = "OK", response = PostJoinRes.class)
     })
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody PostJoinReq postJoinReq) {
+    public ResponseEntity<?> join(@RequestBody @Valid PostJoinReq postJoinReq,
+                                  BindingResult bindingResult) {
+//        if(bindingResult.hasErrors())
+
         try {
             // validation
             if (postJoinReq.getEmail() == null) {
@@ -71,6 +76,7 @@ public class UserController {
             }
 
             PostJoinRes postJoinRes = userService.join(postJoinReq);
+
             if (postJoinRes == null) logger.info("회원가입 실패");
             else logger.info("회원가입 성공");
             return responseService.successResult(postJoinRes, SuccessStatus.SUCCESS);

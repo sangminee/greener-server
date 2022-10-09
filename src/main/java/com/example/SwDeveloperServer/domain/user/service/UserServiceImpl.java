@@ -8,11 +8,10 @@ import com.example.SwDeveloperServer.domain.shop.repository.ItemRepository;
 import com.example.SwDeveloperServer.domain.shop.repository.UserItemRepository;
 import com.example.SwDeveloperServer.domain.toDoList.entity.Todo;
 import com.example.SwDeveloperServer.domain.toDoList.repository.TodoRepository;
-import com.example.SwDeveloperServer.domain.toDoList.service.ToDoListServiceImpl;
 import com.example.SwDeveloperServer.domain.user.entity.PlantPhoto;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import com.example.SwDeveloperServer.domain.user.repository.PlantPhotoRepository;
-import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
+import com.example.SwDeveloperServer.domain.user.repository.UserRepository;
 import com.example.SwDeveloperServer.domain.user.dto.request.PostJoinReq;
 import com.example.SwDeveloperServer.domain.user.dto.response.PostFindEmailRes;
 import com.example.SwDeveloperServer.domain.user.dto.response.PostFindPasswordRes;
@@ -27,8 +26,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +36,7 @@ public class UserServiceImpl implements UerService {
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userJpaRepository;
     private final UserItemRepository userItemListRepository;
     private final JwtService jwtService;
     private final ItemRepository itemRepository;
@@ -48,7 +45,7 @@ public class UserServiceImpl implements UerService {
 
     private final TodoRepository todoRepository;
 
-    public UserServiceImpl(UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository,
+    public UserServiceImpl(UserRepository userJpaRepository, UserItemRepository userItemListRepository,
                            JwtService jwtService, ItemRepository itemRepository, PlantPhotoRepository plantPhotoRepository,
                            PointRepository pointRepository, TodoRepository todoRepository) {
         this.userJpaRepository = userJpaRepository;
@@ -62,21 +59,7 @@ public class UserServiceImpl implements UerService {
 
     @Override
     public PostJoinRes join(PostJoinReq postJoinReq) throws BaseException {
-
-        User user = new User();
-        user.setEmail(postJoinReq.getEmail());
-        user.setPassword(postJoinReq.getPassword());
-        user.setName(postJoinReq.getName());
-        user.setNickname(postJoinReq.getNickname());
-        user.setUserPhotoUrl(postJoinReq.getUserPhotoUrl());
-        user.setPhone(postJoinReq.getPhone());
-        user.setUserCreateTime(LocalDateTime.now());
-
-        user.setUserServiceAgreement(postJoinReq.getUserServiceAgreement());
-        user.setPhoneAgreement(postJoinReq.getPhoneAgreement());
-        user.setUserType(postJoinReq.getUserType());
-        user.setState(postJoinReq.getState());
-
+        User user = postJoinReq.toEntity();
         Optional<PlantPhoto> getPlantPhoto = plantPhotoRepository.findById((long)1);
         user.setPlantPhoto(getPlantPhoto.get());
 
