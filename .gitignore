@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 
 application.yml
+yanolja-clone-firebase-adminsdk-5igdu-42fd4bf2dd.json
 
 ### STS ###
 .apt_generated
