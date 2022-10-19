@@ -8,6 +8,8 @@ build/
 application.yml
 yanolja-clone-firebase-adminsdk-5igdu-42fd4bf2dd.json
 
+firebase-messaging-sw.js
+
 ### STS ###
 .apt_generated
 .classpath
