@@ -9,21 +9,20 @@ import com.example.SwDeveloperServer.domain.myPage.dto.requset.ChangeUserPhotoRe
 import com.example.SwDeveloperServer.domain.myPage.dto.response.ChangeRes;
 import com.example.SwDeveloperServer.domain.myPage.dto.response.GetMyPage;
 import com.example.SwDeveloperServer.domain.user.entity.User;
-import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
+import com.example.SwDeveloperServer.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MyPageServiceImpl implements MyPageService{
 
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userJpaRepository;
     private final StampRepository stampRepository;
     private final PointRepository pointRepository;
 
-    public MyPageServiceImpl(UserJpaRepository userJpaRepository, StampRepository stampRepository, PointRepository pointRepository) {
+    public MyPageServiceImpl(UserRepository userJpaRepository, StampRepository stampRepository, PointRepository pointRepository) {
         this.userJpaRepository = userJpaRepository;
         this.stampRepository = stampRepository;
         this.pointRepository = pointRepository;

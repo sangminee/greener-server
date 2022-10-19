@@ -1,4 +1,4 @@
-package com.example.SwDeveloperServer.domain.s3Upload;
+package com.example.SwDeveloperServer.domain.ex.s3Upload;
 
 import com.example.SwDeveloperServer.utils.response.ResponseService;
 import com.example.SwDeveloperServer.utils.response.SuccessStatus;

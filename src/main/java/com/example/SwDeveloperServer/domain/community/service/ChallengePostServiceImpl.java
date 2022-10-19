@@ -5,7 +5,7 @@ import com.example.SwDeveloperServer.domain.community.dto.res.*;
 import com.example.SwDeveloperServer.domain.community.entity.*;
 import com.example.SwDeveloperServer.domain.community.repository.*;
 import com.example.SwDeveloperServer.domain.user.entity.User;
-import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
+import com.example.SwDeveloperServer.domain.user.repository.UserRepository;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.ErrorStatus;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Service
 public class ChallengePostServiceImpl implements ChallengePostService{
 
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userJpaRepository;
     private final ChallengePostRepository challengePostRepository;
     private final ChallengePostPhotoRepository challengePostPhotoRepository;
     private final ChallengePostTagRepository challengePostTagRepository;
@@ -31,7 +31,7 @@ public class ChallengePostServiceImpl implements ChallengePostService{
     private final ChallengePostCommentRepository challengePostCommentRepository;
     private final ChallengePostJoinRepository challengePostJoinRepository;
 
-    public ChallengePostServiceImpl(UserJpaRepository userJpaRepository, ChallengePostRepository challengePostRepository,
+    public ChallengePostServiceImpl(UserRepository userJpaRepository, ChallengePostRepository challengePostRepository,
                                     ChallengePostPhotoRepository challengePostPhotoRepository, ChallengePostTagRepository challengePostTagRepository, ChallengehowToParticipateRepository howToParticipateRepository, ChallengePostCommentRepository challengePostCommentRepository, ChallengePostJoinRepository challengePostJoinRepository) {
         this.userJpaRepository = userJpaRepository;
         this.challengePostRepository = challengePostRepository;

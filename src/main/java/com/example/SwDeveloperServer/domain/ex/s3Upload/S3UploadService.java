@@ -1,4 +1,4 @@
-package com.example.SwDeveloperServer.domain.s3Upload;
+package com.example.SwDeveloperServer.domain.ex.s3Upload;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -15,6 +15,9 @@ import java.util.UUID;
 public class S3UploadService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
+    @Value("${cloud.aws.s3.dir}")
+    private String folderName;
 
     private final AmazonS3 amazonS3;
 

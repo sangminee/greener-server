@@ -11,7 +11,7 @@ import com.example.SwDeveloperServer.domain.community.repository.InformationPost
 import com.example.SwDeveloperServer.domain.community.repository.InformationPostRepository;
 import com.example.SwDeveloperServer.domain.community.repository.InformationPostScrapRepository;
 import com.example.SwDeveloperServer.domain.user.entity.User;
-import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
+import com.example.SwDeveloperServer.domain.user.repository.UserRepository;
 import com.example.SwDeveloperServer.utils.response.BaseException;
 import com.example.SwDeveloperServer.utils.response.ErrorStatus;
 import org.slf4j.Logger;
@@ -26,12 +26,12 @@ public class InformationPostServiceImpl implements InformationPostService{
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userJpaRepository;
     private final InformationPostRepository informationPostRepository;
     private final InformationPostPhotoRepository informationPostPhotoRepository;
     private final InformationPostScrapRepository informationPostScrapRepository;
 
-    public InformationPostServiceImpl(UserJpaRepository userJpaRepository, InformationPostRepository informationPostRepository,
+    public InformationPostServiceImpl(UserRepository userJpaRepository, InformationPostRepository informationPostRepository,
                                       InformationPostPhotoRepository informationPostPhotoRepository, InformationPostScrapRepository informationPostScrapRepository) {
         this.userJpaRepository = userJpaRepository;
         this.informationPostRepository = informationPostRepository;

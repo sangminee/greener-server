@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -19,11 +21,11 @@ public class ChallengePostComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long challengePostCommentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="userId")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="challengePostId")
     private ChallengePost challengePost;
 

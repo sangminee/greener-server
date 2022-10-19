@@ -9,7 +9,7 @@ import com.example.SwDeveloperServer.domain.shop.repository.ItemRepository;
 import com.example.SwDeveloperServer.domain.shop.repository.UserItemRepository;
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import com.example.SwDeveloperServer.domain.user.repository.PlantPhotoRepository;
-import com.example.SwDeveloperServer.domain.user.repository.UserJpaRepository;
+import com.example.SwDeveloperServer.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,12 +18,12 @@ import java.util.*;
 public class HomeServiceImpl implements HomeService{
 
     private final ItemRepository itemRepository;
-    private final UserJpaRepository userJpaRepository;
+    private final UserRepository userJpaRepository;
     private final UserItemRepository userItemListRepository;
     private final PlantPhotoRepository plantPhotoRepository;
     private final PointRepository pointRepository;
 
-    public HomeServiceImpl(ItemRepository itemRepository, UserJpaRepository userJpaRepository, UserItemRepository userItemListRepository, PlantPhotoRepository plantPhotoRepository, PointRepository pointRepository) {
+    public HomeServiceImpl(ItemRepository itemRepository, UserRepository userJpaRepository, UserItemRepository userItemListRepository, PlantPhotoRepository plantPhotoRepository, PointRepository pointRepository) {
         this.itemRepository = itemRepository;
         this.userJpaRepository = userJpaRepository;
         this.userItemListRepository = userItemListRepository;

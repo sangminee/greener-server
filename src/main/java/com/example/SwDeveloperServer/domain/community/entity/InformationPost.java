@@ -10,6 +10,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -20,7 +22,7 @@ public class InformationPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long informationPostId;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name="userId")
     private User user;
 
