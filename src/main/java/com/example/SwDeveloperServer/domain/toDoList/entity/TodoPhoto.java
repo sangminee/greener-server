@@ -1,18 +1,13 @@
 package com.example.SwDeveloperServer.domain.toDoList.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TodoPhoto {
 
     @Id
@@ -24,5 +19,22 @@ public class TodoPhoto {
     private Todo todo;
 
     private String toDoListPhotoUrl;
-    private Timestamp createdAt;
+
+    private LocalDateTime createdAt;
+
+    @Builder
+    public TodoPhoto(Todo todo, String toDoListPhotoUrl) {
+        this.todo = todo;
+        this.toDoListPhotoUrl = toDoListPhotoUrl;
+       this.createdAt = LocalDateTime.now();
+    }
+
+    public static TodoPhoto toEntity(Todo todo, String toDoListPhotoUrl) {
+        return TodoPhoto.builder()
+                .todo(todo)
+                .toDoListPhotoUrl(toDoListPhotoUrl)
+//                .createdAt()
+                .build();
+    }
+
 }

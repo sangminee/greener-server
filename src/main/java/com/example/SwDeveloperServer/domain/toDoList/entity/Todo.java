@@ -2,10 +2,7 @@ package com.example.SwDeveloperServer.domain.toDoList.entity;
 
 import com.example.SwDeveloperServer.domain.user.entity.User;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -15,8 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Todo {
 
     @Id
@@ -37,6 +33,26 @@ public class Todo {
 //    private int listGoalRepetition;
 
     @ApiModelProperty(notes = "인증 상태 - 0 : 인증 o,  1 : 인증 x", example="1")
-    private int state;
+    @Enumerated(EnumType.STRING)
+    private ToDoState state;
+
+    @Builder
+    public Todo(User user, String goalDescription,
+                LocalDateTime toStartDate, LocalDateTime toEndDate){
+        this.user = user;
+        this.goalDescription = goalDescription;
+        this.toStartDate = toStartDate;
+        this.toEndDate = toEndDate;
+        this.state = ToDoState.Non_certification;
+    }
+
+    public static Todo toEntity(User user, String value, LocalDateTime startLocalDateTime, LocalDateTime endLocalDateTime){
+        return Todo.builder()
+                .user(user)
+                .goalDescription(value)
+                .toStartDate(startLocalDateTime)
+                .toEndDate(endLocalDateTime)
+                .build();
+    }
 
 }
